@@ -151,11 +151,11 @@ struct ColorCyclingCircle: View {
         ZStack {
             ForEach(0..<steps) { value in
                 Circle()
-                .inset(by: CGFloat(value))
+                    .inset(by: CGFloat(value))
                     .strokeBorder(LinearGradient(gradient: Gradient(colors: [self.color(for: value, brightness: 1),
                                                                              self.color(for: value, brightness: 0.5)]), startPoint: .top, endPoint: .bottom), lineWidth: 2)
             }
-        .drawingGroup()
+            .drawingGroup()
         }
     }
     
@@ -170,7 +170,7 @@ struct ColorCyclingCircle: View {
     }
 }
 
-struct ContentView: View {
+struct ColorCircleContentView: View {
     @State private var colorCycle = 0.0
     
     var body: some View {
@@ -179,6 +179,40 @@ struct ContentView: View {
                 .frame(width: 300, height: 300)
             Slider(value: $colorCycle)
         }
+    }
+}
+
+struct ContentView: View {
+    @State private var amount: CGFloat = 0.0
+    
+    var body: some View {
+        VStack {
+            ZStack {
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 200 * amount)
+                    .offset(x: -50, y: -80)
+                    .blendMode(.screen)
+                
+                Circle()
+                    .fill(Color.green)
+                    .frame(width: 200 * amount)
+                    .offset(x: 50, y: -80)
+                    .blendMode(.screen)
+                
+                Circle()
+                    .fill(Color.blue)
+                    .frame(width: 200 * amount)
+                    .blendMode(.screen)
+            }
+            .frame(width: 300, height: 300)
+            
+            Slider(value: $amount)
+            .padding()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.black)
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
